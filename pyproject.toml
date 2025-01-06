@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "drivit"
+version = "0.1.0"
+authors = [
+  { name="Mike Adamson", email="mikeatdot@gmail.com" },
+]
+description = "A simple wrapper for the Google api python client"
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.8"
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: OS Independent",
+]
+dependencies = [
+  "google_api_python_client >= 2.131.0",
+  "ratelimiter >= 1.2.0.post0"
+]
+
+[project.urls]
+Homepage = "https://github.com/mike-tr-adamson/drivit"
+Issues = "https://github.com/mike-tr-adamson/drivit/issues"
