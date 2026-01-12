@@ -14,10 +14,6 @@ class Document(File):
         self.rowIndex = 0
         self.columnIndex = 0
 
-    def create(self, name):
-      body = { 'title': name }
-      self.documentId = self.service.documents().create(body=body).execute()['documentId']
-
     def addLine(self, text, bold=False):
         self.addText(text + '\n', bold)
 
@@ -252,7 +248,7 @@ class Document(File):
         })
 
     def complete(self):
-        self.service.documents().batchUpdate(documentId=self.documentId, body={'requests': self.requests}).execute()
+        self._service.batchUpdate(documentId=self._id, body={'requests': self.requests}).execute()
 
     def output(self):
         result = self._service.get(documentId=self._id).execute()

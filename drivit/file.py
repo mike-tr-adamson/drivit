@@ -1,6 +1,10 @@
 from enum import Enum
 
-FileType = Enum('FileType', ['FOLDER', 'DOCUMENT', 'SPREADSHEET', 'OTHER'])
+FileType = Enum('FileType', [
+                                ('FOLDER', 'application/vnd.google-apps.folder'),
+                                ('DOCUMENT', 'application/vnd.google-apps.document'),
+                                ('SPREADSHEET', 'application/vnd.google-apps.spreadsheet')
+                            ])
 
 class File(object):
     def __init__(self, name, type, id, drive):

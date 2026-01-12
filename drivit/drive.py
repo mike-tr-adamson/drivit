@@ -1,26 +1,16 @@
 from drivit.service import DriveService, SheetsService, DocsService
 from drivit.folder import Folder
-from drivit.document import Document
-from drivit.spreadsheet import Spreadsheet
-    
-class Drive(object):
-    def __init__(self, credentials='~/.drivit/service_token.json'):
-        self.drive = DriveService(credentials).service()
-        self.docs = DocsService(credentials).service()
-        self.sheets = SheetsService(credentials).service()
 
-    def open(self, name):
-        result = self.drive.files().list(corpora='user', q='name="%s" and trashed=false' % name).execute()
-        if len(result['files']) == 0:
-            raise Exception('File %s does not exist' % name)
-        mimetype = result['files'][0]['mimeType']
-        if mimetype.endswith('folder'):
-            folder = Folder(name, result['files'][0]['id'], self.drive, self.docs, self.sheets)
-            return folder
-        elif mimetype.endswith('document'):
-            document = Document(name, result['files'][0]['id'], self.drive, self.docs)
-            return document
-        elif mimetype.endswith('spreadsheet'):
-            spreadsheet = Spreadsheet(name, result['files'][0]['id'], self.drive, self.sheets)
-            spreadsheet.load()
-            return spreadsheet
+class Drive(Folder):
+    def __init__(self, credentials='~/.drivit/service_token.json'):
+        super().__init__('My Drive',
+                         'root',
+                         DriveService(credentials).service(),
+                         DocsService(credentials).service(),
+                         SheetsService(credentials).service())
+
+    def create(self, file_name, type):
+        raise Exception("Cannot create a file in the root folder")
+
+    def query(self, file_name):
+        return 'name="%s" and trashed=false' % file_name;
